@@ -7,12 +7,14 @@ import 'package:stock_market_app/screens/forget_password/forget_password_screen.
 import 'package:stock_market_app/screens/home_page/home_page_screen.dart';
 import 'package:stock_market_app/screens/home_page/side_bar_screens/my_stock_page.dart';
 import 'package:stock_market_app/screens/login/login_screen.dart';
-import 'package:stock_market_app/screens/new_password/new_password.dart';
+import 'package:stock_market_app/screens/change_password/ChangePasswordScreen.dart';
 import 'package:stock_market_app/screens/otp/otp_screen.dart';
 import 'package:stock_market_app/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_market_app/screens/stock_detail/stock_detail_screen.dart';
 import 'package:stock_market_app/models/stock_model.dart';
+
+import '../../screens/change_password/ChangePasswordScreen.dart';
 
 abstract class AppRoutes {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -27,11 +29,11 @@ abstract class AppRoutes {
           builder: (context) => LoginScreen(),
           settings: settings
         );
-      case PageRouteNames.createAccount:
-        return MaterialPageRoute(
-          builder: (context) => CreateAccount(),
-          settings: settings
-        );
+      // case PageRouteNames.createAccount:
+      //   return MaterialPageRoute(
+      //     builder: (context) => CreateAccount(),
+      //     settings: settings
+      //   );
       case PageRouteNames.forgetPassword:
         return MaterialPageRoute(
           builder: (context) => ForgetPasswordScreen(),
@@ -42,9 +44,9 @@ abstract class AppRoutes {
       //     builder: (context) => OtpScreen(),
       //     settings: settings
       //   );
-      case PageRouteNames.newPassword:
+      case PageRouteNames.changePassword:
         return MaterialPageRoute(
-          builder: (context) => NewPassword(),
+          builder: (context) => ChangePasswordScreen(),
           settings: settings
         );
       case PageRouteNames.accountStatement:

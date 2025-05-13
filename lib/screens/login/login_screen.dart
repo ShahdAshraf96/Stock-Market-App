@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stock_market_app/core/constants/app_assets.dart';
 import 'package:stock_market_app/core/extensions/validations.dart';
 import 'package:stock_market_app/core/routes/page_route_names.dart';
 import 'package:stock_market_app/core/theme/app_colors.dart';
 import 'package:stock_market_app/core/widgets/custom_elevated_button.dart';
 import 'package:stock_market_app/core/widgets/custom_text_form_field.dart';
+import 'package:stock_market_app/core/services/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,9 +16,28 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _authService = FirebaseAuthService();
   bool _rememberMe = false;
+
+  Future<String?> _getEmailFromUsername(String username) async {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('usernames')
+          .doc(username)
+          .get();
+
+      if (doc.exists) {
+        return doc.data()?['email'] as String?;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print("Error fetching email for username $username: $e");
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,21 +73,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 40),
                       CustomTextFormField(
-                        text: "Email",
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        hint: "Ex@gmail.com",
+                        text: "Username",
+                        controller: _usernameController,
+                        keyboardType: TextInputType.text,
+                        hint: "Enter your username",
                         enableSuggestions: true,
                         hintColor: Colors.grey,
                         onValidate: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Please enter your email address";
-                          } else if (!Validations.validateEmail(value)) {
-                            return "Please enter a valid email address";
-                          }
                           return null;
                         },
                       ),
+
                       const SizedBox(height: 12),
                       CustomTextFormField(
                         text: "Password",
@@ -74,11 +91,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         isPassword: true,
                         maxLines: 1,
                         onValidate: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Please enter your password";
-                          } else if (!Validations.validatePassword(value)) {
-                            return "Please enter a valid password";
-                          }
+                          // if (value == null || value.trim().isEmpty) {
+                          //   return "Please enter your password";
+                          // } else if (!Validations.validatePassword(value)) {
+                          //   return "Please enter a valid password";
+                          // }
                           return null;
                         },
                       ),
@@ -105,13 +122,38 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomElevatedButton(
                         text: "Login",
                         buttonColor: const Color(0xFF9966CC), // Amethyst color
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            PageRouteNames.homePage,
-                            arguments: {'title': "Home"},
-                          );
-                        },
+                          onTap: () async {
+                            final username = _usernameController.text.trim();
+                            final password = _passwordController.text.trim();
+
+                            if (username.isEmpty || password.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Please enter both username and password")),
+                              );
+                              return;
+                            }
+
+                            final email = await _getEmailFromUsername(username);
+                            if (email == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("No account found for this username")),
+                              );
+                              return;
+                            }
+
+                            try {
+                              final user = await _authService.signInWithEmail(email, password); // 👇 update this method
+                              if (user != null) {
+                                Navigator.pushNamed(context, PageRouteNames.homePage);
+                              }
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Login failed: ${e.toString()}")),
+                              );
+                            }
+                          }
+
+
                       ),
                       const SizedBox(height: 10),
                       Center(

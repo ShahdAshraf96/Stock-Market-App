@@ -4,7 +4,7 @@ class PageRouteNames {
   static const String createAccount = "/create_account";
   static const String forgetPassword = "/forget_password";
   static const String otp = "/otp";
-  static const String newPassword = "/new_password";
+  static const String changePassword = "/change_password";
   static const String stockDetail = "/stock_detail";
   static const String accountStatement = "/account_statement";
   static const String homePage = "/home_page";

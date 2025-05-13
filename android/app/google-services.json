@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "945931462973",
+    "project_id": "stock-market-app-cb007",
+    "storage_bucket": "stock-market-app-cb007.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945931462973:android:adad7a6f8dd3a82cfffd54",
+        "android_client_info": {
+          "package_name": "com.example.stock_market_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByrMP0TCoOeOcAMZX6ah9sif1NNfke_bw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
