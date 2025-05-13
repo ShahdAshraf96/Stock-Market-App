@@ -142,9 +142,47 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
 
                             try {
-                              final user = await _authService.signInWithEmail(email, password); // 👇 update this method
+                              final user = await _authService.signInWithEmail(email, password);
                               if (user != null) {
-                                Navigator.pushNamed(context, PageRouteNames.homePage);
+                                //  Check if user should change password
+                                final doc = await FirebaseFirestore.instance
+                                    .collection('usernames')
+                                    .doc(username)
+                                    .get();
+
+                                final forceChange = doc.data()?['forcePasswordChange'] ?? false;
+
+                                if (forceChange) {
+                                  // Show dialog
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) => AlertDialog(
+                                      title: const Text("Change Password"),
+                                      content: const Text(
+                                          "You are using a temporary password. Would you like to change it now?"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pushNamed(context, PageRouteNames.homePage,arguments: {'title': 'Home'},),
+                                          child: const Text("Later"),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context); // close dialog
+                                            Navigator.pushNamed(
+                                              context,
+                                              PageRouteNames.changePassword,
+                                              arguments: {'username': username}, //  pass username
+                                            );
+                                          },
+                                          child: const Text("Change Now"),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.pushNamed(context, PageRouteNames.homePage,arguments: {'title': 'Home'});
+                                }
                               }
                             } catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(

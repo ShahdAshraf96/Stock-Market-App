@@ -85,12 +85,14 @@ abstract class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => const Scaffold(
             body: Center(
-              child: Text('Error: Stock details not provided.'),
+              child: Text('Error: bill details not provided.'),
             ),
           ),
           settings: settings,
         );
       case PageRouteNames.homePage:
+        print('➡️ Home Page arguments: ${settings.arguments}');
+
         if (settings.arguments is Map<String, dynamic>) {
           final Map<String, dynamic> args =
               settings.arguments as Map<String, dynamic>;
@@ -103,7 +105,7 @@ abstract class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => const Scaffold(
             body: Center(
-              child: Text('Error: Stock details not provided.'),
+              child: Text('Error:home page not provided.'),
             ),
           ),
           settings: settings,

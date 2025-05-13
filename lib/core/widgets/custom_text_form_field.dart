@@ -95,7 +95,7 @@ class _CustomTextFieldState extends State<CustomTextFormField> {
           onFieldSubmitted: widget.onFieldSubmitted,
           onSaved: widget.onSaved,
           onTap: widget.onTap,
-          maxLines: widget.maxLines,
+          maxLines: widget.isPassword ?? false ? 1 : widget.maxLines ?? 1,
           minLines: widget.minLines,
           maxLength: widget.maxLength,
           obscureText: widget.isPassword ?? false ? obscureText : false,

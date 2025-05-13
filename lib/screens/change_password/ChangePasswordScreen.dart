@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stock_market_app/core/theme/app_colors.dart';
@@ -16,7 +17,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final _confirmPasswordController = TextEditingController();
   bool _isLoading = false;
 
-  Future<void> _changePassword() async {
+  Future<void> _changePassword(String username) async {
     final newPassword = _newPasswordController.text.trim();
     final confirmPassword = _confirmPasswordController.text.trim();
 
@@ -40,11 +41,22 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         await user.updatePassword(newPassword);
+
+        // ✅ Update Firestore to mark password as updated
+        if (username.isNotEmpty) {
+          await FirebaseFirestore.instance
+              .collection('usernames')
+              .doc(username)
+              .update({'forcePasswordChange': false});
+        }
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Password changed successfully")),
         );
         _newPasswordController.clear();
         _confirmPasswordController.clear();
+
+        Navigator.pop(context); // Return after update
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("No user logged in")),
@@ -61,6 +73,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final username = args?['username'] ?? '';
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Change Password", style: TextStyle(fontSize: 28)),
@@ -70,7 +85,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         ),
       ),
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
@@ -95,7 +110,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 child: CustomElevatedButton(
                   text: _isLoading ? "Please wait..." : "Change Password",
                   buttonColor: const Color(0xFF9966CC),
-                  onTap: _isLoading ? null : _changePassword,
+                  onTap: _isLoading ? null : () => _changePassword(username),
                 ),
               ),
             ],
