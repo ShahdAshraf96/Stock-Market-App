@@ -18,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
     {'text': 'Market', 'icon': Icons.store},
     {'text': 'High Price', 'icon': Icons.trending_up},
     {'text': 'Account Statement', 'icon': Icons.receipt_long},
-    {'text': 'Transaction Bills', 'icon': Icons.insert_drive_file},
+    {'text': 'Transaction Invoices', 'icon': Icons.insert_drive_file},
     {'text': 'Transaction', 'icon': Icons.swap_horiz},
     {'text': 'News', 'icon': Icons.newspaper},
     {'text': 'Settings', 'icon': Icons.settings},
@@ -59,6 +59,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.pop(context);
                   if (item['text'] == 'Portfolio') {
                     Navigator.pushNamed(context, PageRouteNames.myStock);
+                  }
+                  else if (item['text'] == 'Account Statement') {
+                    Navigator.pushNamed(context, PageRouteNames.accountStatement);
+                  }
+                  else if (item['text'] == 'Transaction Invoices') {
+                    Navigator.pushNamed(context, PageRouteNames.dualBillView);
+                  }
+                  else if (item['text'] == 'Market') {
+                    Navigator.pushNamed(context, PageRouteNames.accountStatement);
+                  }
+                  else if (item['text'] == 'News') {
+                    Navigator.pushNamed(context, PageRouteNames.accountStatement);
                   }
                 },
               )),

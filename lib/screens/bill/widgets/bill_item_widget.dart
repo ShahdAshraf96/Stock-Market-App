@@ -22,9 +22,9 @@ class BillItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = stock.price * stock.volume;
-    const brokerFee = 0.005;
-    const exchangeFee = 0.002;
-    const fraFee = 0.001;
+    const brokerFee = 0.005;// kol 1000 3la 5
+    const exchangeFee = 0.00001;// exchange stock fee
+    const fraFee = 0.00001;// finance regular authority fee
     final totalFees = total * (brokerFee + exchangeFee + fraFee);
     final finalAmount = isBuy ? total + totalFees : total - totalFees;
     final now = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());

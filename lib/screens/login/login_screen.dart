@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _authService = FirebaseAuthService();
   bool _rememberMe = false;
 
+
   Future<String?> _getEmailFromUsername(String username) async {
     try {
       final doc = await FirebaseFirestore.instance

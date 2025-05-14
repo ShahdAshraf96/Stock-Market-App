@@ -2,8 +2,8 @@ class Stock {
   final String ticker;
   final String company;
   final double price;
-  final double change;
-  final int volume;
+  final double change;// price change
+  final int volume;// quantity of buy or selling
 
   Stock({
     required this.ticker,

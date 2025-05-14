@@ -14,11 +14,18 @@ import 'package:flutter/material.dart';
 import 'package:stock_market_app/screens/stock_detail/stock_detail_screen.dart';
 import 'package:stock_market_app/models/stock_model.dart';
 
-import '../../screens/change_password/ChangePasswordScreen.dart';
 
 abstract class AppRoutes {
   static Route onGenerateRoute(RouteSettings settings) {
     switch(settings.name) {
+      // case PageRouteNames.initial:
+      //   return MaterialPageRoute(
+      //       builder: (context) => MyHomePage(title: 'Home',),
+      //       settings: settings
+      //   );
+
+        //Bring it back instead of home page
+
       case PageRouteNames.initial:
         return MaterialPageRoute(
           builder: (context) => SplashScreen(),
