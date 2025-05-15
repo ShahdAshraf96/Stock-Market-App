@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stock_market_app/core/routes/page_route_names.dart';
+import 'package:stock_market_app/screens/news_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -52,16 +53,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              ...menuItems.map((item) => ListTile(
-                leading: Icon(item['icon'], color: Colors.grey),
-                title: Text(item['text']),
-                onTap: () {
-                  Navigator.pop(context);
-                  if (item['text'] == 'Portfolio') {
-                    Navigator.pushNamed(context, PageRouteNames.myStock);
-                  }
-                },
-              )),
+              ...menuItems.map(
+                (item) => ListTile(
+                  leading: Icon(item['icon'], color: Colors.grey),
+                  title: Text(item['text']),
+                  onTap: () {
+                    Navigator.pop(context);
+
+                    if (item['text'] == 'Portfolio') {
+                      Navigator.pushNamed(context, PageRouteNames.myStock);
+                    } else if (item['text'] == 'News') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NewsScreen(),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
             ],
           ),
         ),
