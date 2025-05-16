@@ -2,6 +2,7 @@ import 'package:stock_market_app/models/stock_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AccountStatement {
+  final String userId;
   final Stock stock;
   final bool isBuy;
   final int quantity;
@@ -12,6 +13,7 @@ class AccountStatement {
     required this.isBuy,
     required this.quantity,
     required this.date,
+    required this.userId,
   });
 
   factory AccountStatement.fromJson(Map<String, dynamic> json) {
@@ -30,6 +32,7 @@ class AccountStatement {
       isBuy: json['isBuy'],
       quantity: json['quantity'],
       date: parsedDate,
+      userId: json['userId'],
 
     );
   }

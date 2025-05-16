@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:stock_market_app/screens/stock_detail/stock_detail_screen.dart';
 import 'package:stock_market_app/models/stock_model.dart';
 
+import '../../screens/buy_sell_stock/order_tab_screen.dart'; // adjust path if needed
+
 
 abstract class AppRoutes {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -56,6 +58,12 @@ abstract class AppRoutes {
           builder: (context) => ChangePasswordScreen(),
           settings: settings
         );
+      case PageRouteNames.buyStock:
+        return MaterialPageRoute(
+          builder: (context) => const OrderTabScreen(),
+          settings: settings,
+        );
+
       case PageRouteNames.accountStatement:
         return MaterialPageRoute(
           builder: (context) => AccountStatementScreen(),
