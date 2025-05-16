@@ -16,7 +16,6 @@ class _MyHomePageState extends State<MyHomePage> {
     {'text': 'New Order', 'icon': Icons.receipt_long},
     {'text': 'Account Statement', 'icon': Icons.account_balance_wallet_outlined},
     {'text': 'Invoices', 'icon': Icons.insert_drive_file},
-    {'text': 'Transaction', 'icon': Icons.swap_horiz},
     {'text': 'News', 'icon': Icons.newspaper},
     {'text': 'Settings', 'icon': Icons.settings},
     {'text': 'Exit', 'icon': Icons.logout},

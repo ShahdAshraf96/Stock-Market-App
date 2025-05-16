@@ -30,10 +30,10 @@ class DualBillScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Transaction Bills'),
+          title: const Text('Invoices'),
           bottom: const TabBar(tabs: [
-            Tab(text: "Buy Bills"),
-            Tab(text: "Sell Bills"),
+            Tab(text: "Buy Invoices"),
+            Tab(text: "Sell Invoices"),
           ]),
         ),
         body: TabBarView(
