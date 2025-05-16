@@ -8,7 +8,7 @@ import '../controllers/order_controller.dart';
 import 'package:flutter/cupertino.dart';
 import '../stock_selector_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:stock_market_app/core/controllers/order_controller.dart' as logic_controller;
 class OrderFormWidget extends StatefulWidget {
   final bool isBuy;
   final Key key;
@@ -405,10 +405,16 @@ class OrderFormWidgetState extends State<OrderFormWidget> {
               );
 
               try {
-                await OrderService().saveOrder(order);
+                final controller = logic_controller.OrderController();
+                final customerName = currentUser.displayName ?? 'Unknown User';
+
+                await controller.placeNewOrder(order: order);
+
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("${widget.isBuy ? 'Buy' : 'Sell'} order submitted")),
                 );
+
 
 
                 quantityController.clear();

@@ -55,7 +55,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       await FirebaseFirestore.instance.collection('reset_requests').add({
         'username': username,
         'email': email,
-        'message': message,
+        'message': "Request Password Reset",
         'timestamp': DateTime.now().toIso8601String(),
       });
 

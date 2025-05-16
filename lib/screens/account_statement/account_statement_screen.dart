@@ -15,7 +15,7 @@ class AccountStatementScreen extends StatelessWidget {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     return FirebaseFirestore.instance
         .collection('account_statements')
-        .where('userId', isEqualTo: uid)
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .orderBy('date', descending: true)
         .snapshots()
         .map((snapshot) =>

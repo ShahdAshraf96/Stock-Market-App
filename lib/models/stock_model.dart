@@ -15,11 +15,12 @@ class Stock {
 
   factory Stock.fromJson(Map<String, dynamic> json) {
     return Stock(
-      ticker: json['ticker'],
-      company: json['company'],
-      price: json['price'].toDouble(),
-      change: json['change'].toDouble(),
-      volume: json['volume'],
+      ticker: json['ticker'] ?? '',
+      company: json['company'] ?? '',
+      price: (json['price'] ?? 0).toDouble(),
+      change: (json['change'] ?? 0).toDouble(),
+      volume: json['volume'] ?? 0,
     );
   }
+
 }

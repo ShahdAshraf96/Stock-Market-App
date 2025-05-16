@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:stock_market_app/screens/stock_detail/stock_detail_screen.dart';
 import 'package:stock_market_app/models/stock_model.dart';
 
+import '../../screens/admin_panel/admin_dashboard_screen.dart';
 import '../../screens/buy_sell_stock/order_tab_screen.dart'; // adjust path if needed
 
 
@@ -30,7 +31,7 @@ abstract class AppRoutes {
 
       case PageRouteNames.initial:
         return MaterialPageRoute(
-          builder: (context) => SplashScreen(),
+          builder: (context) => SplashScreen(), //builder: (context) => SplashScreen(),
           settings: settings
         );
       case PageRouteNames.login:
@@ -144,6 +145,11 @@ abstract class AppRoutes {
             ),
           ),
           settings: settings,
+        );
+      case PageRouteNames.adminDashboard:
+        return MaterialPageRoute(
+            builder: (context) => AdminDashboardScreen(),
+            settings: settings
         );
       default:
         return MaterialPageRoute(

@@ -10,6 +10,10 @@ class BillItemWidget extends StatelessWidget {
   final bool isBuy;
   final String customerName;
   final String customerId;
+  final int quantity;
+  final double finalAmount;
+  final Map<String, dynamic> fees;
+  final DateTime timestamp;
 
   const BillItemWidget({
     super.key,
@@ -17,17 +21,18 @@ class BillItemWidget extends StatelessWidget {
     required this.isBuy,
     required this.customerName,
     required this.customerId,
+    required this.quantity,
+    required this.finalAmount,
+    required this.fees,
+    required this.timestamp,
   });
 
   @override
   Widget build(BuildContext context) {
-    final total = stock.price * stock.volume;
-    const brokerFee = 0.005;// kol 1000 3la 5
-    const exchangeFee = 0.00001;// exchange stock fee
-    const fraFee = 0.00001;// finance regular authority fee
-    final totalFees = total * (brokerFee + exchangeFee + fraFee);
-    final finalAmount = isBuy ? total + totalFees : total - totalFees;
-    final now = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    final total = stock.price * quantity;
+    final broker = (fees['broker'] ?? 0.0) * total;
+    final exchange = (fees['exchange'] ?? 0.0) * total;
+    final fra = (fees['fra'] ?? 0.0) * total;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -41,13 +46,13 @@ class BillItemWidget extends StatelessWidget {
             const SizedBox(height: 8),
             Text("Customer: $customerName"),
             Text("ID: $customerId"),
-            Text("Quantity: ${stock.volume}"),
+            Text("Quantity: $quantity"),
             Text("Price per Share: \$${stock.price.toStringAsFixed(2)}"),
             Text("Base Total: \$${total.toStringAsFixed(2)}"),
             const SizedBox(height: 8),
-            Text("Brokerage Fee: \$${(total * brokerFee).toStringAsFixed(2)}"),
-            Text("Exchange Fee: \$${(total * exchangeFee).toStringAsFixed(2)}"),
-            Text("FRA Fee: \$${(total * fraFee).toStringAsFixed(2)}"),
+            Text("Brokerage Fee: \$${broker.toStringAsFixed(2)}"),
+            Text("Exchange Fee: \$${exchange.toStringAsFixed(2)}"),
+            Text("FRA Fee: \$${fra.toStringAsFixed(2)}"),
             const Divider(height: 20),
             Text(
               isBuy
@@ -55,7 +60,8 @@ class BillItemWidget extends StatelessWidget {
                   : "Final Amount Received: \$${finalAmount.toStringAsFixed(2)}",
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            Text("Date: $now", style: const TextStyle(color: Colors.grey)),
+            Text("Date: ${DateFormat.yMd().add_jm().format(timestamp)}",
+                style: const TextStyle(color: Colors.grey)),
             const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -78,7 +84,7 @@ class BillItemWidget extends StatelessWidget {
                   label: const Text("View Bill"),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () => _downloadPdf(context, totalFees, finalAmount),
+                  onPressed: () => _downloadPdf(context, broker + exchange + fra, finalAmount),
                   icon: const Icon(Icons.picture_as_pdf),
                   label: const Text("Download PDF"),
                 ),
@@ -90,10 +96,9 @@ class BillItemWidget extends StatelessWidget {
     );
   }
 
-  Future<void> _downloadPdf(BuildContext context, double fees, double finalAmount) async {
+  Future<void> _downloadPdf(BuildContext context, double totalFees, double finalAmount) async {
     final pdf = pw.Document();
-    final base = stock.price * stock.volume;
-    final timestamp = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    final base = stock.price * quantity;
 
     pdf.addPage(
       pw.Page(
@@ -104,14 +109,14 @@ class BillItemWidget extends StatelessWidget {
             pw.SizedBox(height: 12),
             pw.Text("Customer: $customerName"),
             pw.Text("ID: $customerId"),
-            pw.Text("Date: $timestamp"),
+            pw.Text("Date: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(timestamp)}"),
             pw.SizedBox(height: 10),
             pw.Text(isBuy ? "📥 BUY BILL" : "📤 SELL BILL", style: pw.TextStyle(fontSize: 16)),
             pw.Text("Stock: ${stock.company} (${stock.ticker})"),
-            pw.Text("Quantity: ${stock.volume}"),
+            pw.Text("Quantity: $quantity"),
             pw.Text("Price per Share: \$${stock.price.toStringAsFixed(2)}"),
             pw.Text("Base Total: \$${base.toStringAsFixed(2)}"),
-            pw.Text("Total Fees: \$${fees.toStringAsFixed(2)}"),
+            pw.Text("Total Fees: \$${totalFees.toStringAsFixed(2)}"),
             pw.Divider(),
             pw.Text(
               isBuy
@@ -125,6 +130,6 @@ class BillItemWidget extends StatelessWidget {
     );
 
     await Printing.layoutPdf(onLayout: (format) async => pdf.save());
-    Navigator.pop(context); // Go back after download
+    Navigator.pop(context);
   }
 }

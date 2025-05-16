@@ -12,5 +12,7 @@ class PageRouteNames {
   static const String billView = "/bill_view";
   static const String dualBillView = "/dual_bill_view";
   static const String buyStock = '/buy_stock';
+  static const adminDashboard = '/admin-dashboard';
+
 
 }

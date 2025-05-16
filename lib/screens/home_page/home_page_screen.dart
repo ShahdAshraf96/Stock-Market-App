@@ -76,6 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   else if (item['text'] == 'New Order') {
                     Navigator.pushNamed(context, PageRouteNames.buyStock);
                   }
+                  else if (item['text'] == 'Exit') {
+                    Navigator.pushNamed(context, PageRouteNames.login);
+                  }
                 },
               )),
             ],
