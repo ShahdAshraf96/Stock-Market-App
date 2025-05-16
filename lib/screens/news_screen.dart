@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:stock_market_app/screens/drawer.dart';
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -46,6 +47,7 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Latest News')),
+      drawer: AppDrawer(),
       body:
           isLoading
               ? const Center(child: CircularProgressIndicator())

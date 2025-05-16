@@ -4,6 +4,7 @@ import 'package:stock_market_app/models/stock_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stock_market_app/models/account_statement_model.dart';
+import 'package:stock_market_app/screens/drawer.dart';
 
 
 
@@ -51,6 +52,7 @@ class AccountStatementScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Account Statement")),
+      drawer: AppDrawer(),
       body: FutureBuilder<double>(
         future: getOpeningBalance(),
         builder: (context, balanceSnapshot) {

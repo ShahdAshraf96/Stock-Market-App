@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stock_market_app/screens/drawer.dart';
 import 'widget/order_form_widget.dart';
 
 class OrderTabScreen extends StatefulWidget {
@@ -47,6 +48,7 @@ class _OrderTabScreenState extends State<OrderTabScreen> with SingleTickerProvid
           ],
         ),
       ),
+      drawer: AppDrawer(),
       body: TabBarView(
         controller: _tabController,
         children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stock_market_app/screens/drawer.dart';
 import 'package:stock_market_app/screens/market/services/stock_services.dart';
 
 class StockHomePage extends StatefulWidget {
@@ -52,6 +53,7 @@ class _StockHomePageState extends State<StockHomePage> with SingleTickerProvider
           labelStyle: const TextStyle(fontSize: 16),
         ),
       ),
+      drawer: AppDrawer(),
       body: TabBarView(
         controller: _tabController,
         children: [

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:stock_market_app/screens/drawer.dart';
+
 class CurrencyConverterScreen extends StatefulWidget {
   const CurrencyConverterScreen({super.key});
 
@@ -87,6 +89,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
       appBar: AppBar(
         title: Text('Currency Converter'),
       ),
+      drawer: AppDrawer(),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(

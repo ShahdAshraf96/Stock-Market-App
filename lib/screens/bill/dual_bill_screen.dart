@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_market_app/models/stock_model.dart';
+import 'package:stock_market_app/screens/drawer.dart';
 import 'widgets/bill_item_widget.dart';
 
 class DualBillScreen extends StatelessWidget {
@@ -36,6 +37,7 @@ class DualBillScreen extends StatelessWidget {
             Tab(text: "Sell Invoices"),
           ]),
         ),
+        drawer: AppDrawer(),
         body: TabBarView(
           children: [
             _buildBillList(uid: uid, isBuy: true),
