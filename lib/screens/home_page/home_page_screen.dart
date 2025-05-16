@@ -3,7 +3,6 @@ import 'package:stock_market_app/core/routes/page_route_names.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
   final String title;
 
   @override
@@ -11,26 +10,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   final List<Map<String, dynamic>> menuItems = [
-    {'text': 'Portfolio', 'icon': Icons.show_chart},
     {'text': 'Market', 'icon': Icons.store},
     {'text': 'High Price', 'icon': Icons.trending_up},
     {'text': 'New Order', 'icon': Icons.receipt_long},
     {'text': 'Account Statement', 'icon': Icons.account_balance_wallet_outlined},
-    {'text': 'Transaction Invoices', 'icon': Icons.insert_drive_file},
+    {'text': 'Invoices', 'icon': Icons.insert_drive_file},
     {'text': 'Transaction', 'icon': Icons.swap_horiz},
     {'text': 'News', 'icon': Icons.newspaper},
     {'text': 'Settings', 'icon': Icons.settings},
     {'text': 'Exit', 'icon': Icons.logout},
   ];
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       drawer: Drawer(
         child: Directionality(
-          textDirection: TextDirection.ltr, // Make the drawer LTR
+          textDirection: TextDirection.ltr,
           child: ListView(
             children: [
               const DrawerHeader(
@@ -58,26 +48,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 title: Text(item['text']),
                 onTap: () {
                   Navigator.pop(context);
-                  if (item['text'] == 'Portfolio') {
-                    Navigator.pushNamed(context, PageRouteNames.myStock);
-                  }
-                  else if (item['text'] == 'Account Statement') {
-                    Navigator.pushNamed(context, PageRouteNames.accountStatement);
-                  }
-                  else if (item['text'] == 'Transaction Invoices') {
-                    Navigator.pushNamed(context, PageRouteNames.dualBillView);
-                  }
-                  else if (item['text'] == 'Market') {
-                    Navigator.pushNamed(context, PageRouteNames.accountStatement);
-                  }
-                  else if (item['text'] == 'News') {
-                    Navigator.pushNamed(context, PageRouteNames.accountStatement);
-                  }
-                  else if (item['text'] == 'New Order') {
-                    Navigator.pushNamed(context, PageRouteNames.buyStock);
-                  }
-                  else if (item['text'] == 'Exit') {
-                    Navigator.pushNamed(context, PageRouteNames.login);
+                  switch (item['text']) {
+                    case 'Account Statement':
+                      Navigator.pushNamed(context, PageRouteNames.accountStatement);
+                      break;
+                    case 'Invoices':
+                      Navigator.pushNamed(context, PageRouteNames.dualBillView);
+                      break;
+                    case 'Market':
+                      break;
+                    case 'News':
+                      Navigator.pushNamed(context, PageRouteNames.accountStatement);
+                      break;
+                    case 'New Order':
+                      Navigator.pushNamed(context, PageRouteNames.buyStock);
+                      break;
+                    case 'Exit':
+                      Navigator.pushNamed(context, PageRouteNames.login);
+                      break;
                   }
                 },
               )),
@@ -86,24 +74,28 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       body: Directionality(
-        textDirection: TextDirection.rtl, // Keep the body RTL if you want
+        textDirection: TextDirection.rtl,
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('لقد ضغطت على الزر هذا العدد من المرات:'),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, PageRouteNames.buyStock);
+            },
+            child: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [Colors.teal.withOpacity(0.4), Colors.transparent],
+                  stops: [0.6, 1],
+                ),
               ),
-            ],
+              child: const Center(
+                child: Icon(Icons.add, size: 40, color: Colors.teal),
+              ),
+            ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'زيادة',
-        child: const Icon(Icons.add),
       ),
     );
   }

@@ -14,7 +14,7 @@ class OrderController {
     if (user == null) throw Exception('User not logged in');
     final uid = user.uid;
 
-    // 1️⃣ Fetch username & customerId from Firestore
+    // Fetch username & customerId from Firestore
     final userDoc = await FirebaseFirestore.instance
         .collection('usernames')
         .doc(uid)
@@ -23,7 +23,7 @@ class OrderController {
     final customerName = userDoc.data()?['username'] ?? 'Unknown';
     final customerId = userDoc.data()?['customerId'] ?? uid;
 
-    // 2️⃣ Fetch current billing fees from Firestore
+    // Fetch current billing fees from Firestore
     final billingDoc = await FirebaseFirestore.instance
         .collection('billing_config')
         .doc('fees')
@@ -39,10 +39,10 @@ class OrderController {
 
     final now = Timestamp.now();
 
-    // 3️⃣ Save to 'orders'
+    // Save to 'orders'
     await FirebaseFirestore.instance.collection('orders').add(order.toMap());
 
-    // 4️⃣ Save to 'account_statements'
+    // Save to 'account_statements'
     await FirebaseFirestore.instance.collection('account_statements').add({
       'userId': uid,
       'date': now,
@@ -54,7 +54,7 @@ class OrderController {
       },
     });
 
-    // 5️⃣ Save to 'invoices'
+    // Save to 'invoices'
     await FirebaseFirestore.instance.collection('invoices').add({
       'customerId': customerId,
       'customerName': customerName,

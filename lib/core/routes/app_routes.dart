@@ -2,20 +2,17 @@ import 'package:stock_market_app/core/routes/page_route_names.dart';
 import 'package:stock_market_app/screens/account_statement/account_statement_screen.dart';
 import 'package:stock_market_app/screens/bill/bill_view_screen.dart';
 import 'package:stock_market_app/screens/bill/dual_bill_screen.dart';
-import 'package:stock_market_app/screens/create_account/create_account_screen.dart';
 import 'package:stock_market_app/screens/forget_password/forget_password_screen.dart';
 import 'package:stock_market_app/screens/home_page/home_page_screen.dart';
-import 'package:stock_market_app/screens/home_page/side_bar_screens/my_stock_page.dart';
 import 'package:stock_market_app/screens/login/login_screen.dart';
 import 'package:stock_market_app/screens/change_password/ChangePasswordScreen.dart';
-import 'package:stock_market_app/screens/otp/otp_screen.dart';
 import 'package:stock_market_app/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_market_app/screens/stock_detail/stock_detail_screen.dart';
 import 'package:stock_market_app/models/stock_model.dart';
 
 import '../../screens/admin_panel/admin_dashboard_screen.dart';
-import '../../screens/buy_sell_stock/order_tab_screen.dart'; // adjust path if needed
+import '../../screens/buy_sell_stock/order_tab_screen.dart';
 
 
 abstract class AppRoutes {
@@ -73,11 +70,6 @@ abstract class AppRoutes {
       case PageRouteNames.dualBillView:
         return MaterialPageRoute(
           builder: (context) => DualBillScreen(),
-          settings: settings
-        );
-      case PageRouteNames.myStock:
-        return MaterialPageRoute(
-          builder: (context) => MyStocksPage(),
           settings: settings
         );
       case PageRouteNames.billView:

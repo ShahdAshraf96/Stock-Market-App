@@ -8,7 +8,6 @@ class PageRouteNames {
   static const String stockDetail = "/stock_detail";
   static const String accountStatement = "/account_statement";
   static const String homePage = "/home_page";
-  static const String myStock = "/my_stock";
   static const String billView = "/bill_view";
   static const String dualBillView = "/dual_bill_view";
   static const String buyStock = '/buy_stock';
